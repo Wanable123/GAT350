@@ -21,6 +21,15 @@ glm::vec3 colors[] = {
 	
 };
 
+glm::vec2 texcoords[] = {
+	{0,0},
+	{0,1},
+	{1,0},
+	{0,1},
+	{1,1},
+	{1,0}
+
+};
 
 //const char* vertex_shader =
 //"#version 430 core\n"
@@ -41,18 +50,21 @@ glm::vec3 colors[] = {
 
 int main(int argc, char**argv)
 {
+	LOG("Application Startted...");
 	neu::InitializeMemory();
 
 	neu::SetFilePath("../Assets");
 	neu::Engine::Instance().Initialize();
 	neu::Engine::Instance().Register();
 
+	LOG("Engine Initialized...");
 	float angle = 0;
 	neu::Vector2 position;
 
 
 	neu::g_renderer.CreateWindow("Neumont", 800,600);
-	
+	LOG("Window Initialized...");
+
 	GLuint pvbo = 0;
 	glGenBuffers(1, &pvbo);
 	glBindBuffer(GL_ARRAY_BUFFER, pvbo);
@@ -64,37 +76,43 @@ int main(int argc, char**argv)
 	glBindBuffer(GL_ARRAY_BUFFER, cvbo);
 	glBufferData(GL_ARRAY_BUFFER, 18 * sizeof(glm::vec3), colors, GL_STATIC_DRAW);
 
+	GLuint tvbo = 0;
+	glGenBuffers(1, &tvbo);
+	glBindBuffer(GL_ARRAY_BUFFER, tvbo);
+	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(glm::vec3), texcoords, GL_STATIC_DRAW);
+
 	// create vertex array
 	GLuint vao = 0;
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
-	glEnableVertexAttribArray(0);
 
+	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, pvbo);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 
 	glEnableVertexAttribArray(1);
 	glBindBuffer(GL_ARRAY_BUFFER, cvbo);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+
+	glEnableVertexAttribArray(2);
+	glBindBuffer(GL_ARRAY_BUFFER, tvbo);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, NULL);
 	// create shader
 	std::shared_ptr<neu::Shader> vs = neu::g_resources.Get<neu::Shader>("shaders/basic.vert",GL_VERTEX_SHADER);
 	std::shared_ptr<neu::Shader> fs = neu::g_resources.Get<neu::Shader>("shaders/basic.frag",GL_FRAGMENT_SHADER);
 
-
-	/*
-	GLuint vs = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vs, 1, &vertex_shader, NULL);
-	glCompileShader(vs);
-	GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fs, 1, &fragment_shader, NULL);
-	glCompileShader(fs);
-	*/
 	// create program
 	GLuint program = glCreateProgram();
 	glAttachShader(program, fs->m_shader);
 	glAttachShader(program, vs->m_shader);
 	glLinkProgram(program);
 	glUseProgram(program);
+
+	//create texture
+	std::shared_ptr<neu::Texture> textureLlama = neu::g_resources.Get<neu::Texture>("textures/llama.png");
+	std::shared_ptr<neu::Texture> textureBox = neu::g_resources.Get<neu::Texture>("textures/box.png");
+	textureLlama->Bind();
+
 
 	GLint uniform1 = glGetUniformLocation(program, "scale");
 	GLint uniform2 = glGetUniformLocation(program, "tint");
