@@ -1,10 +1,12 @@
 #include "Shader.h"
-#include "Core/File.h"
 #include "Core/Logger.h"
-namespace neu {
+#include "Core/File.h"
+
+namespace neu
+{
 	Shader::~Shader()
 	{
-		if (m_shader!=0) 
+		if (!m_shader)
 		{
 			glDeleteShader(m_shader);
 		}
@@ -18,11 +20,11 @@ namespace neu {
 		if (!success)
 		{
 			LOG("error reading shader file %s.", filename.c_str());
-			return false;
 		}
 
 		// get shader type arguments
 		va_list args;
+
 		va_start(args, filename);
 		GLuint shaderType = va_arg(args, GLuint);
 		va_end(args);
@@ -40,9 +42,10 @@ namespace neu {
 		glGetShaderiv(m_shader, GL_COMPILE_STATUS, &status);
 		if (status == GL_FALSE)
 		{
-			// display shader error
+			//display shader error
 			GLint length = 0;
 			glGetShaderiv(m_shader, GL_INFO_LOG_LENGTH, &length);
+
 
 			if (length > 0)
 			{
@@ -51,13 +54,10 @@ namespace neu {
 				LOG("failed to compile shader %s.", filename.c_str());
 				LOG("shader info: %s", infoLog.c_str());
 			}
-
-			// delete shader
+			//delete shader
 			glDeleteShader(m_shader);
 			m_shader = 0;
 		}
-
 		return true;
 	}
-
 }

@@ -10,16 +10,14 @@ namespace neu
 	PhysicsSystem g_physicsSystem;
 	EventManager g_eventManager;
 
-	void Engine::Initialize() 
+	void Engine::Initialize()
 	{
-
 		g_renderer.Initialize();
 		g_inputSystem.Initialize();
 		g_audioSystem.Initialize();
 		g_resources.Initialize();
 		g_physicsSystem.Initialize();
 		g_eventManager.Initialize();
-
 	}
 
 	void Engine::Shutdown()
@@ -42,7 +40,6 @@ namespace neu
 		g_inputSystem.Update();
 		g_audioSystem.Update();
 	}
-
 
 	void Engine::Register()
 	{
