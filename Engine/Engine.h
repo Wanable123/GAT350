@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Serialization/Json.h"
+#include "Renderer/Model.h" //has to be above memory because assimp uses its own memory
+#include "Renderer/GUI.h"
 
 #include "Core/Memory.h"
 #include "Core/File.h"
@@ -9,7 +11,6 @@
 
 #include "Math/MathUtils.h"
 #include "Math/Random.h"
-#include "glm/glm.hpp"
 
 #include "Framework/Scene.h"
 #include "Framework/Game.h"
@@ -28,7 +29,9 @@
 #include "Components/TextComponent.h"
 #include "Components/TilemapComponent.h"
 #include "Components/CharacterComponent.h"
+#include "Components/LightComponent.h"
 #include "Components/CameraComponent.h"
+#include "Components/CameraController.h"
 
 #include "Input/InputSystem.h"
 #include "Audio/AudioSystem.h"
@@ -39,10 +42,15 @@
 #include "Renderer/Text.h"
 #include "Renderer/Font.h"
 #include "Renderer/Texture.h"
-#include "Renderer/Model.h"
 #include "Renderer/Shader.h"
 #include "Renderer/Program.h"
 #include "Renderer/Material.h"
+#include "Renderer/VertexBuffer.h"
+#include "Renderer/CubemapTexture.h"
+#include "Renderer/FrameBuffer.h"
+
+#include "glm/glm.hpp"
+
 
 #include <memory>
 #include <vector>
@@ -58,13 +66,14 @@ namespace neu
 	extern ResourceManager g_resources;
 	extern PhysicsSystem g_physicsSystem;
 	extern EventManager g_eventManager;
+	extern GUI g_gui;
 
 	class Engine : public Singleton<Engine>
 	{
 	public:
+
 		void Initialize();
 		void Shutdown();
-
 		void Update();
 
 		void Register();

@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\unlit">
+      <UniqueIdentifier>{03c9b282-e0e7-443f-b351-6e9da1a1059c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -31,6 +34,27 @@
     </None>
     <None Include="..\Build\Assets\Shaders\basic.prog">
       <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Build\Assets\Materials\multi.mtrl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Build\Assets\Shaders\unlit\texture.prog">
+      <Filter>Resource Files\unlit</Filter>
+    </None>
+    <None Include="..\Build\Assets\Shaders\unlit\texture.vert">
+      <Filter>Resource Files\unlit</Filter>
+    </None>
+    <None Include="..\Build\Assets\Shaders\unlit\color.frag">
+      <Filter>Resource Files\unlit</Filter>
+    </None>
+    <None Include="..\Build\Assets\Shaders\unlit\color.prog">
+      <Filter>Resource Files\unlit</Filter>
+    </None>
+    <None Include="..\Build\Assets\Shaders\unlit\color.vert">
+      <Filter>Resource Files\unlit</Filter>
+    </None>
+    <None Include="..\Build\Assets\Shaders\unlit\texture.frag">
+      <Filter>Resource Files\unlit</Filter>
     </None>
   </ItemGroup>
 </Project>

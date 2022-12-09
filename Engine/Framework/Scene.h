@@ -10,7 +10,7 @@ namespace neu
 	class Renderer;
 	class Game;
 
-	class Scene : public GameObject, public ISerializable
+	class Scene : public GameObject, public ISerializable, public Resource
 	{
 	public:
 		Scene() = default;
@@ -20,9 +20,13 @@ namespace neu
 
 		CLASS_DECLARATION(Scene)
 
+			virtual bool Create(std::string filename, ...) override;
+
 		void Initialize() override;
 		void Update() override;
-		void Draw(Renderer& renderer);
+
+		void PreRender(Renderer& renderer);
+		void Render(Renderer& renderer);
 
 		virtual bool Write(const rapidjson::Value& value) const override;
 		virtual bool Read(const rapidjson::Value& value) override;
@@ -41,8 +45,9 @@ namespace neu
 
 		Game* GetGame() { return m_game; }
 
+
 	private:
-		Game* m_game =nullptr;
+		Game* m_game = nullptr;
 		std::list<std::unique_ptr<Actor>> m_actors;
 	};
 
